@@ -28,15 +28,15 @@ class _HomePageState extends State<HomePage> {
   
     TextSpan priceTextWidget = new TextSpan(
       text: "\$$priceUSD\n", // \$ is interpreted as $ character and the 2nd $ represents String interpolation
-      style: new TextStyle(color: Colors.black)
+      style: new TextStyle(color: Colors.black, fontSize: 15.0)
     );
     
     String precentageChangeText = "1 hour: $percentageChange%";
     
     TextSpan percentageChangeWidget = double.parse(percentageChange)>0? new TextSpan(
-      text: precentageChangeText, style: new TextStyle(color: Colors.green, fontSize: 18.0)
+      text: precentageChangeText, style: new TextStyle(color: Colors.green, fontSize: 15.0)
     ): new TextSpan(
-      text: precentageChangeText, style: new TextStyle(color: Colors.red)
+      text: precentageChangeText, style: new TextStyle(color: Colors.red, fontSize: 15.0)
     );
 
     return new RichText(
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
     print('The build fxn Runs..');
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Home"),
+        title: new Text("Checking Cryptoz.."),
       ),
       body: cryptoWidget(),
     );
