@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 
 
 class HomePage extends StatefulWidget {
@@ -10,12 +14,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   List currencies;
+  int number;
+  final List<MaterialColor> colors = [Colors.blue, Colors.red, Colors.indigo,]
 
   Future<List> getCurrencies() async{
-    String cryptoURL = "";
+    number = 50;
+    String cryptoURL = "https://api.coinmarketcap.com/v1/ticker/?limit=${number}";
+    http.Response response = await http.get(Uri.encodeFull(cryptoURL));
+    return JSON.decode(response.body);
   }
 
-  Widget _cryptoWidget(){
+  Widget cryptoWidget(){
    return new Container(
      child: new Flexible(
        child: new ListView.builder(
@@ -28,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState(){
+  void initState() async {
     super.initState();
     currencies = await getCurrencies();
   }
@@ -39,7 +48,7 @@ class _HomePageState extends State<HomePage> {
       appBar: new AppBar(
         title: new Text("Home"),
       ),
-      body: _cryptoWidget(),
+      body: cryptoWidget(),
     );
   }
 
