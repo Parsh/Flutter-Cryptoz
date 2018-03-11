@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       style: new TextStyle(color: Colors.black, fontSize: 15.0)
     );
     
-    String precentageChangeText = "1 hour: $percentageChange%";
+    String precentageChangeText = "Past hour: $percentageChange%";
     
     TextSpan percentageChangeWidget = double.parse(percentageChange)>0? new TextSpan(
       text: precentageChangeText, style: new TextStyle(color: Colors.green, fontSize: 15.0)
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         trailing: new Icon(
           double.parse(currency['percent_change_1h'])>0? Icons.arrow_drop_up: Icons.arrow_drop_down, 
           color: double.parse(currency['percent_change_1h'])>0? Colors.green: Colors.red,
-          size: 40.0,
+          size: 45.0,
           ),
       );
   }
@@ -69,8 +69,11 @@ class _HomePageState extends State<HomePage> {
  
        child: new ListView.builder(
          itemCount: currencies == null? 0: currencies.length ,
-         itemBuilder: (BuildContext context, int index){
+         itemBuilder: (BuildContext context, int i){
            
+           if(i.isOdd){ return new Divider();}
+
+           final index = i~/2;
            Map currency = currencies[index];
            MaterialColor color = colors[index % colors.length];
            return getUI(currency, color);
@@ -99,7 +102,7 @@ class _HomePageState extends State<HomePage> {
     print('The build fxn Runs..');
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Checking Cryptoz.."),
+        title: new Text("The Crypto Report"),
       ),
       body: cryptoWidget(),
     );
