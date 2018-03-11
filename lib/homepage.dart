@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     String precentageChangeText = "1 hour: $percentageChange%";
     
     TextSpan percentageChangeWidget = double.parse(percentageChange)>0? new TextSpan(
-      text: precentageChangeText, style: new TextStyle(color: Colors.green)
+      text: precentageChangeText, style: new TextStyle(color: Colors.green, fontSize: 18.0)
     ): new TextSpan(
       text: precentageChangeText, style: new TextStyle(color: Colors.red)
     );
@@ -52,16 +52,23 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: color,
           child: new Text(currency['name'][0]),
           ),
-        title: new Text(currency['name'], style: new TextStyle(fontWeight: FontWeight.bold)),
+        title: new Text(currency['name'], style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
         subtitle: getSubtitle(currency['price_usd'], currency['percent_change_1h']),
+        isThreeLine: true,
+        trailing: new Icon(
+          double.parse(currency['percent_change_1h'])>0? Icons.arrow_drop_up: Icons.arrow_drop_down, 
+          color: double.parse(currency['percent_change_1h'])>0? Colors.green: Colors.red,
+          size: 40.0,
+          ),
       );
   }
 
   Widget cryptoWidget(){
+   print("Running the cryptoWidget..");
    return new Container(
-     child: new Flexible(
+ 
        child: new ListView.builder(
-         itemCount: currencies.length,
+         itemCount: currencies == null? 0: currencies.length ,
          itemBuilder: (BuildContext context, int index){
            
            Map currency = currencies[index];
@@ -70,18 +77,26 @@ class _HomePageState extends State<HomePage> {
 
          },
        )
-     ),
-   ); 
+   );   
+  }
+
+  void fetchCurrencyData() async{
+    print('Fetching..');
+    currencies = await getCurrencies(); // as the data get's fetched it is fed to the currencies variable
+    setState((){}); // as the currencies data get's fetched we use set state fxn to re-render the widget UI and
+               //therefore the build fxn and hence the cryptoWidget runs again, thereby, displaying the list. 
   }
 
   @override
-  void initState() async {
+  void initState() {
+    print('Initiated HomePage');
     super.initState();
-    currencies = await getCurrencies();
+    fetchCurrencyData();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('The build fxn Runs..');
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Home"),
