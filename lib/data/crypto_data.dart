@@ -10,6 +10,13 @@ class CryptoModel {
     this.priceUSD,
     this.percentageChange1h
   });
+
+  CryptoModel.fromMap(Map<String, dynamic> currencyMap){
+    name = currencyMap['name'];
+    priceUSD = currencyMap['priceUSD'];
+    percentageChange1h = currencyMap['percentageChange1h'];
+  }
+
 }
 
 abstract class CryptoAPI  {
