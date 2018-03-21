@@ -11,7 +11,7 @@ class Injector{
   static final Injector _singleton = new Injector._internal();
   static Flavor _flavor;
 
-  static void configuration(Flavor flavor){
+  static void configure(Flavor flavor){
     _flavor = flavor;
   }
 

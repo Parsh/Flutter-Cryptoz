@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import './homepage.dart';
+import 'data/dependency_injection.dart';
 
-void main() => runApp(new MyApp());
+void main(){
+  Injector.configure(Flavor.production);
+  runApp(new MyApp());
+  }
 
 class MyApp extends StatelessWidget {
   @override
